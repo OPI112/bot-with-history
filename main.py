@@ -1,7 +1,8 @@
 import telebot
 import sqlite3
+import datetime
 
-API_TOKEN = '6077941896:AAFzfMFGMhBH10y8odpC2_wPl8nIkix-mb4'
+API_TOKEN = ''
 
 bot = telebot.TeleBot(API_TOKEN)
 
@@ -31,7 +32,8 @@ def delete_history(message):
 def echo_message(message):
     text = message.text
     chat_id = message.chat.id
-    date = message.date
+    date = datetime.datetime.fromtimestamp(message.date)
+    print(date)
 
     conn = sqlite3.connect('m3u3/history_database.db')
     conn.execute('INSERT INTO history (text, chat_id, date) values(?, ?, ?)', (text, chat_id, date))
