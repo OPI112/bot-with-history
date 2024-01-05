@@ -19,7 +19,7 @@ I can save your history, /delete and /show!
 def delete_history(message):
     
     conn = sqlite3.connect('m3u3/history_database.db')
-    conn.execute('DELETE FROM history WHERE user_id = ?',(message.from_user.id,))
+    conn.execute('DELETE FROM history WHERE user_id = ?',(message.chat.id,))
     conn.commit()
     conn.close()
     
@@ -30,7 +30,7 @@ def delete_history(message):
 @bot.message_handler(func=lambda message: True)
 def echo_message(message):
     text = message.text
-    user_id = message.from_user.id
+    user_id = message.chat.id
     date = message.date
 
     conn = sqlite3.connect('m3u3/history_database.db')
