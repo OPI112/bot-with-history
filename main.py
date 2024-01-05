@@ -1,7 +1,7 @@
 import telebot
 import sqlite3
 
-API_TOKEN = ''
+API_TOKEN = '6077941896:AAFzfMFGMhBH10y8odpC2_wPl8nIkix-mb4'
 
 bot = telebot.TeleBot(API_TOKEN)
 
@@ -19,7 +19,7 @@ I can save your history, /delete and /show!
 def delete_history(message):
     
     conn = sqlite3.connect('m3u3/history_database.db')
-    conn.execute('DELETE FROM history WHERE user_id = ?',(message.chat.id,))
+    conn.execute('DELETE FROM history WHERE chat_id = ?',(message.chat.id,))
     conn.commit()
     conn.close()
     
@@ -30,11 +30,11 @@ def delete_history(message):
 @bot.message_handler(func=lambda message: True)
 def echo_message(message):
     text = message.text
-    user_id = message.chat.id
+    chat_id = message.chat.id
     date = message.date
 
     conn = sqlite3.connect('m3u3/history_database.db')
-    conn.execute('INSERT INTO history (text, user_id, date) values(?, ?, ?)', (text, user_id, date))
+    conn.execute('INSERT INTO history (text, chat_id, date) values(?, ?, ?)', (text, chat_id, date))
     conn.commit()
     conn.close()
 
